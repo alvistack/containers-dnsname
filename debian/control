@@ -1,0 +1,28 @@
+Source: containernetworking-dnsname
+Section: devel
+Priority: optional
+Standards-Version: 4.5.0
+Maintainer: Wong Hoi Sing Edison <hswong3i@pantarei-design.com>
+Homepage: https://github.com/containers/dnsname/tags
+Vcs-Browser: https://github.com/alvistack/containers-dnsname
+Vcs-Git: https://github.com/alvistack/containers-dnsname.git
+Build-Depends:
+ debhelper,
+ debhelper-compat (= 10),
+ golang-1.23,
+
+Package: containernetworking-dnsname
+Architecture: amd64
+Description: CNI plugin to provide name resolution for containers
+ This CNI plugin sets up the use of dnsmasq on a given CNI network so
+ that Pods can resolve each other by name. When configured, the pod and
+ its IP address are added to a network specific hosts file that dnsmasq
+ reads in. Similarly, when a pod is removed from the network, it will
+ remove the entry from the hosts file. Each CNI network will have its own
+ dnsmasq instance. The dnsname plugin was specifically designed for the
+ Podman container engine.
+Depends:
+ ${shlibs:Depends},
+ ${misc:Depends},
+ containernetworking-plugins,
+ dnsmasq-base,
