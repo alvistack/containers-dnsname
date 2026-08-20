@@ -1,0 +1,22 @@
+#!/usr/bin/make -f
+
+SHELL := /bin/bash
+
+override_dh_auto_build:
+	mkdir -p bin
+	set -ex && \
+		go build \
+            -mod vendor -buildmode pie -v \
+            -ldflags "-s -w -X main.gitCommit=18822f9a4fb35d1349eb256f4cd2bfd372474d84" \
+            -o ./bin/dnsname github.com/containers/dnsname/plugins/meta/dnsname
+
+override_dh_auto_install:
+	install -Dpm755 -d debian/tmp/opt/cni/bin
+	install -Dpm755 -t debian/tmp/opt/cni/bin bin/dnsname
+
+override_dh_auto_test:
+
+override_dh_auto_clean:
+
+%:
+	dh $@
